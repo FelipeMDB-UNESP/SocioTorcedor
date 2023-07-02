@@ -1,14 +1,17 @@
 package modelos
 
 import enums.TipoSocio
+import sun.util.calendar.BaseCalendar
 import java.util.*
 
 class Socio(private var nome: String, private var cpf: String, private var plano: TipoSocio?) {
     // Outros métodos e propriedades devem ser adicionados aqui
 
+    private val dataCriacao: Date
     init {
         require(nome.isNotEmpty()) { "O nome do sócio não pode estar vazio" }
         require(cpf.isNotEmpty()) { "O CPF do sócio não pode estar vazio" }
+        dataCriacao = Calendar.getInstance().time
     }
 
     constructor(nome: String, cpf: String) : this(nome, cpf, null)
@@ -60,6 +63,8 @@ class Socio(private var nome: String, private var cpf: String, private var plano
     }
 
     fun imprimirDados(){
+        val a: Int = 3
+        val b = 2
         val valorPlano = this.plano?.valorPlano ?: 0
         var texto: String
         var dependentes = ""
@@ -70,7 +75,8 @@ class Socio(private var nome: String, private var cpf: String, private var plano
                             |Nome: $nome
                             |CPF: $cpf
                             |Plano: $plano
-                            |Valor a ser pago: R$${plano?.valorPlano}
+                            |Valor a ser pago: R$${valorPlano}
+                            |Data de criação do Sócio: $dataCriacao
                             |Dependentes: $dependentes
                         """.trimMargin()
         println(texto)
@@ -103,6 +109,10 @@ class Socio(private var nome: String, private var cpf: String, private var plano
     fun getListaSociosDependentes(): List<Socio> {
 
         return listaSociosDependentes
+    }
+
+    fun getDataCriacao(): Date {
+        return dataCriacao
     }
 
 }
